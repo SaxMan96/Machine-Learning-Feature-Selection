@@ -28,7 +28,9 @@ Dane potrzebne do wykonania projektu znajduja sie na stronie https://home.ipipan
 
 Najbardziej skorelowane kolumny:
 
-<!--Correlation Matrix-->
+![Correlation Matrix](https://raw.githubusercontent.com/SaxMan96/Machine-Learning-Feature-Selection/master/images/Correlation Matrix.png)
+
+
 
 Widać że istnieją wysoko skorelowane cechy - selekcja jest niezbędna, aby uzyskać zoptymalizowane pod kątem uczenia maszynowego dane.
 
@@ -79,9 +81,7 @@ Selected Features:
 10 28 48 64 105 128 153 241 281 318 336 338 378 433 442 451 453 472 475 493
 ```
 
-Poniżej rozkłady cech wybranych przez algorytm boruta.
-
- <!--Features Distribution-->
+Poniżej rozkłady cech wybranych przez algorytm boruta. ![Features Distribution](https://raw.githubusercontent.com/SaxMan96/Machine-Learning-Feature-Selection/master/images/Features distributuion.png)
 
 Część z nich ma rozkład zbliżony do Gausowskiego, część wykazuje lekki charakter dwumodalny.  Uznałem za konieczne użycie jedynie standaryzacji.
 
@@ -91,13 +91,21 @@ W ostatecznym rozrachunku to właśnie cechy wybranę przez Borutę posłużyły
 
 Wszystkie modele testowane w tym projekcie miały parametry dobrane na podstawie wyniku zachłannego poszukiwania w przestrzeni tych parametrów. 
 
- <!--Log Reg Parameters Grid Search.png-->
-
 Miarą oceny algorytmów jest *accuracy* ponieważ klasy są równomiernie reprezentowane.
 
 ### Regresja Logistyczna
 
 Ten algorytm prezentuje podejście naiwne w problemie predykcji jednej dwóch klas. 
+
+Przestrzeń parametrów:
+
+```python
+logregParam = {'logreg__C': np.logspace(-3, 0, 100)}
+```
+
+Wynik poszukiwania:
+
+![https://raw.githubusercontent.com/SaxMan96/Machine-Learning-Feature-Selection/master/images/Log%20Reg%20Parameters%20Grid%20Search.png](https://raw.githubusercontent.com/SaxMan96/Machine-Learning-Feature-Selection/master/images/Log Reg Parameters Grid Search.png)
 
 Wybrane Parametry:
 
@@ -108,8 +116,8 @@ logreg__C            0.151991
 Wynik:
 
 ```
-accuracy on the test set:  0.598
-accuracy on the train set:  0.628
+accuracy on the test set:  0.60
+accuracy on the train set:  0.63
 ```
 
 Macierz pomyłek na zbiorze testowym:
@@ -120,6 +128,19 @@ Macierz pomyłek na zbiorze testowym:
 |  **Actual 1** |              134 | 128             |
 
 ### K-Neighbors Classifier
+
+Przestrzeń parametrów:
+
+```python
+knnParam = {
+    'knn__n_neighbors': [1, 3, 5, 7, 8, 9, 10, 11],
+    'knn__weights': ['uniform', 'distance'],
+}
+```
+
+Wynik poszukiwania:
+
+![KN Class Parameters Grid Search](https://raw.githubusercontent.com/SaxMan96/Machine-Learning-Feature-Selection/master/images/KN Class Parameters Grid Search.png)
 
 Wybrane Parametry:
 
@@ -144,6 +165,19 @@ Macierz pomyłek na zbiorze testowym:
 
 ### DecisionTree Classifier
 
+Przestrzeń parametrów
+
+```python
+dectreeParam = {
+    'dectree__criterion': ['gini', 'entropy'],
+    'dectree__class_weight': ['balanced', None]
+}
+```
+
+Wynik poszukiwania:
+
+![Dec Tree Parameters Grid Search](https://raw.githubusercontent.com/SaxMan96/Machine-Learning-Feature-Selection/master/images/Dec Tree Parameters Grid Search.png)
+
 Wybrane Parametry:
 
 ```
@@ -154,7 +188,7 @@ dectree__criterion                  gini
 Wynik:
 
 ```
-accuracy on the train set:  1.0
+accuracy on the train set:  1.00
 accuracy on the test set:  0.79
 ```
 
@@ -167,6 +201,20 @@ Macierz pomyłek na zbiorze testowym:
 
 ### Random Forest
 
+Ostatecznie ten algorytm poradził sobie najlepiej i został wybrany do finalnej predykcji.
+
+Przestrzeń parametrów
+
+```python
+randtreeParam = {'randtree__max_depth': range(5, 25)}
+n_estimators=100
+bootstrap=False
+```
+
+Wynik poszukiwania:
+
+![Rand Tree Parameters Grid Search](https://raw.githubusercontent.com/SaxMan96/Machine-Learning-Feature-Selection/master/images/Rand Tree Parameters Grid Search.png)
+
 Wybrane Parametry:
 
 ```
@@ -176,7 +224,7 @@ randtree__max_depth                  14
 Wynik:
 
 ```
-accuracy on the train set:  1.0
+accuracy on the train set:  1.00
 accuracy on the test set:  0.896
 ```
 
@@ -192,14 +240,49 @@ Macierz pomyłek na zbiorze testowym:
 Dokładność na zbiorze testowym:
 
 ```
-Logistic Regression: 0.59
+Logistic Regression: 0.60
 K-Neighbors Classifier: 0.88
 Decision Tree Classifier: 0.79
 RandomForestClassifier: 0.89
 ```
 
+## Wybór modelu i metody selekcji danych
+
+Dla każdego modelu uruchamiałem trening z wykorzystaniem wszystkich trzech zestawów cech, dopasowując ostateczne parametry jeszcze raz za pomocą poszukiwania zachłannego oraz mierząc accuracy na zbiorze testowym z wykorzystaniem pięciokrotnej walidacji krzyżowej (ang. Cross Validation).
+
+Zadbałem też o równomierny podział klas w podzbiorach CV za pomocą funkcji `StratifiedKFold`.
+
+```
+Logistic Regression
+	 features_KNR 21		CV accuracy: 62.8 %
+	 features_DTR 18		CV accuracy: 62.6 %
+	 features_boruta 20		CV accuracy: 61.6 %
+```
+
+```
+K-Neighbors Classifier
+	 features_KNR 21		CV accuracy: 66.6 %
+	 features_DTR 18		CV accuracy: 85.3 %
+	 features_boruta 20		CV accuracy: 83.0 %
+```
+
+```
+Decision Tree Clasifier
+	 features_KNR 21		CV accuracy: 63.6 %
+	 features_DTR 18		CV accuracy: 71.4 %
+	 features_boruta 20		CV accuracy: 71.0 %
+```
+
+```
+Random Forest Classifier
+	 features_KNR 19		CV accuracy: 71.6 %
+	 features_DTR 16		CV accuracy: 81.0 %
+	 features_boruta 20		CV accuracy: 86.6 %   <---
+```
+
 ## Wyniki
 
-- Najlepsze cechy (20 kolumn) wybrał algorytm Boruta
-- Najlepszym modelem okazał się: K-Neighbors Classifier
+Wybór pada na **Random Forest Classifier** i 20 cech wybranych przez algorytm **Boruta** który osiągnął wynik: **86.6%** na zbiorze testowym stanowiącym 25% zbioru wejściowego.
+
+Finalne predykcja została wykonana modelu wytrenowanym na pełnym zbiorze wejściowym (połączony zbiór treningowy i testowy z powyższych eksperymentów)
 
