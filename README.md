@@ -17,12 +17,19 @@ Zbiór *artificial* to sztuczny zbiór w którym sa ukryte istotne zmienne
 
 Dane potrzebne do wykonania projektu znajduja sie na stronie https://home.ipipan.waw.pl/p.teisseyre/TEACHING/ZMUM/index.html.
 
-## Testowane Modele
+## Testowane metody selekcji cech
+
+- R² denoisser
+- Boruta
+
+## Testowane modele
 
 - Linear Regression
 - K-Neighbours Classifier
 - Decision Tree Classifier
 - Random Forest Classifier
+
+ <div style="page-break-after: always;"></div>
 
 ## Korelacje danych
 
@@ -33,6 +40,8 @@ Najbardziej skorelowane kolumny:
 
 
 Widać że istnieją wysoko skorelowane cechy - selekcja jest niezbędna, aby uzyskać zoptymalizowane pod kątem uczenia maszynowego dane.
+
+ <div style="page-break-after: always;"></div>
 
 ## Metody selekcji zmiennych
 
@@ -81,17 +90,20 @@ Selected Features:
 10 28 48 64 105 128 153 241 281 318 336 338 378 433 442 451 453 472 475 493
 ```
 
+ <div style="page-break-after: always;"></div>
+
 Poniżej rozkłady cech wybranych przez algorytm boruta. ![Features Distribution](https://raw.githubusercontent.com/SaxMan96/Machine-Learning-Feature-Selection/master/images/Features distributuion.png)
 
 Część z nich ma rozkład zbliżony do Gausowskiego, część wykazuje lekki charakter dwumodalny.  Uznałem za konieczne użycie jedynie standaryzacji.
 
 W ostatecznym rozrachunku to właśnie cechy wybranę przez Borutę posłużyły do wyterenowania modelu, dlatego zaprezentuję działania modeli klasyfikatorów właśnie na tych cechach.
 
+ <div style="page-break-after: always;"></div>
+
 ## Modele Klasyfikacyjne
 
-Wszystkie modele testowane w tym projekcie miały parametry dobrane na podstawie wyniku zachłannego poszukiwania w przestrzeni tych parametrów. 
-
-Miarą oceny algorytmów jest *accuracy* ponieważ klasy są równomiernie reprezentowane.
+Wszystkie testowane modele miały parametry dobrane na podstawie zachłannego poszukiwania 
+w przestrzeni parametrów. Miarą oceny jest *accuracy* ponieważ klasy są równomiernie reprezentowane.
 
 ### Regresja Logistyczna
 
@@ -163,6 +175,8 @@ Macierz pomyłek na zbiorze testowym:
 | **Actual -1** |              211 | 27              |
 |  **Actual 1** |               33 | 229             |
 
+ <div style="page-break-after: always;"></div>
+
 ### DecisionTree Classifier
 
 Przestrzeń parametrów
@@ -199,6 +213,8 @@ Macierz pomyłek na zbiorze testowym:
 | **Actual -1** |              108 | 130             |
 |  **Actual 1** |              125 | 137             |
 
+ <div style="page-break-after: always;"></div>
+
 ### Random Forest
 
 Ostatecznie ten algorytm poradził sobie najlepiej i został wybrany do finalnej predykcji.
@@ -234,6 +250,8 @@ Macierz pomyłek na zbiorze testowym:
 | ------------: | ---------------: | --------------- |
 | **Actual -1** |              117 | 121             |
 |  **Actual 1** |              129 | 133             |
+
+ <div style="page-break-after: always;"></div>
 
 ### Porównanie jakości
 
