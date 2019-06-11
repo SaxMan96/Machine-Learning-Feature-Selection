@@ -302,5 +302,8 @@ Random Forest Classifier
 
 Wybór pada na **Random Forest Classifier** i 20 cech wybranych przez algorytm **Boruta** który osiągnął wynik: **86.6%** na zbiorze testowym stanowiącym 25% zbioru wejściowego.
 
-Finalne predykcja została wykonana modelu wytrenowanym na pełnym zbiorze wejściowym (połączony zbiór treningowy i testowy z powyższych eksperymentów)
+Finalna predykcja została wykonana na modelu wytrenowanym na pełnym zbiorze wejściowym (połączony zbiór treningowy i testowy z powyższych eksperymentów)
+
+Projekt był oceniany na podstawie zbioru walidacyjnego - labele oczywiście nie zostały mi udostępnione.
+Uzyskany wynik: **92.5%**
 
