@@ -185,13 +185,6 @@ dectree__class_weight               None
 dectree__criterion                  gini
 ```
 
-Macierz pomyłek na zbiorze testowym:
-
-|               | **Predicted -1** | **Predicted 1** |
-| ------------: | ---------------: | --------------- |
-| **Actual -1** |              108 | 130             |
-|  **Actual 1** |              125 | 137             |
-
  <div style="page-break-after: always;"></div>
 
 ### Random Forest
