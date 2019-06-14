@@ -132,13 +132,6 @@ accuracy on the test set:  0.60
 accuracy on the train set:  0.63
 ```
 
-Macierz pomyłek na zbiorze testowym:
-
-|               | **Predicted -1** | **Predicted 1** |
-| ------------: | ---------------: | --------------- |
-| **Actual -1** |              115 | 123             |
-|  **Actual 1** |              134 | 128             |
-
 ### K-Neighbors Classifier
 
 Przestrzeń parametrów:
@@ -168,14 +161,7 @@ accuracy on the train set:  0.94
 accuracy on the test set: 0.88
 ```
 
-Macierz pomyłek na zbiorze testowym:
-
-|               | **Predicted -1** | **Predicted 1** |
-| ------------: | ---------------: | --------------- |
-| **Actual -1** |              211 | 27              |
-|  **Actual 1** |               33 | 229             |
-
- <div style="page-break-after: always;"></div>
+<div style="page-break-after: always;"></div>
 
 ### DecisionTree Classifier
 
@@ -197,13 +183,6 @@ Wybrane Parametry:
 ```
 dectree__class_weight               None
 dectree__criterion                  gini
-```
-
-Wynik:
-
-```
-accuracy on the train set:  1.00
-accuracy on the test set:  0.79
 ```
 
 Macierz pomyłek na zbiorze testowym:
@@ -243,13 +222,6 @@ Wynik:
 accuracy on the train set:  1.00
 accuracy on the test set:  0.896
 ```
-
-Macierz pomyłek na zbiorze testowym:
-
-|               | **Predicted -1** | **Predicted 1** |
-| ------------: | ---------------: | --------------- |
-| **Actual -1** |              117 | 121             |
-|  **Actual 1** |              129 | 133             |
 
  <div style="page-break-after: always;"></div>
 
